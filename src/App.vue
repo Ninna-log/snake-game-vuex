@@ -4,16 +4,25 @@
 
     <div class="column">
       Cell size (px):
-      <input type="number" min="10"/>
+      <input type="number" min="10" v-model.number="cellSize"/>
     </div>
     <div class="column">
       Board size (cells):
-      <input type="number" min="5"/>
+      <input type="number" min="5" v-model.number="boardSize"/>
     </div>
     <div class="column">
       Speed:
-      <input type="number" min="1"/>
+      <input type="number" min="1" v-model.number="speed"/>
     </div>
+    <snake-canvas
+      :cellSize="cellSize"
+      :boardSize="boardSize"
+      :speed="speed"
+    />
+    <div>Scores: {{ scores }}</div>
+    <button id="play-btn">
+      {{ isPlaying ? "Stop" : "Play"}}
+    </button>
   </div>
 </template>
 
@@ -23,6 +32,15 @@ export default {
   name: 'App',
   components: {
  
+  },
+  data(){
+    return {
+      cellSize: 10,
+      boardSize: 20,
+      speed: 10,
+      scores: 0,
+      isPlaying: false
+    };
   }
 }
 </script>
@@ -54,7 +72,7 @@ body {
   margin: 5px;
 }
 .column input {
-  width: 30px;
+  width: 40px;
   border-radius: 4px;
   border: 1px solid #ccc;
   line-height: 20px;
