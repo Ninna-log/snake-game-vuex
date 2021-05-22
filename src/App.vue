@@ -12,7 +12,7 @@
     </div>
     <div class="column">
       Speed:
-      <input type="number" min="1" v-model.number="speed"/>
+      <input type="number" min="1" v-model.number="speed" :isPlaying="isPlaying"/>
     </div>
     <snake-canvas
       :cellSize="cellSize"
@@ -20,18 +20,19 @@
       :speed="speed"
     />
     <div>Scores: {{ scores }}</div>
-    <button id="play-btn">
+    <button id="play-btn" v-on:click="isPlaying ? stop() : start()">
       {{ isPlaying ? "Stop" : "Play"}}
     </button>
   </div>
 </template>
 
 <script>
+import SnakeCanvas from "./components/SnakeCanvas";
 
 export default {
   name: 'App',
   components: {
- 
+    SnakeCanvas
   },
   data(){
     return {
@@ -41,6 +42,14 @@ export default {
       scores: 0,
       isPlaying: false
     };
+  },
+  methods: {
+    start() {
+      this.isPlaying = true;
+    },
+    stop() {
+      this.isPlaying = false;
+    }
   }
 }
 </script>
@@ -76,5 +85,13 @@ body {
   border-radius: 4px;
   border: 1px solid #ccc;
   line-height: 20px;
+}
+#play-btn {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 20px;
+  margin-top: 10px;
+  cursor: pointer;
 }
 </style>
